@@ -1,36 +1,39 @@
 import sys
+si = sys.stdin.readline
 
-n = int(input())
-paper = []
-for i in range(n):
-    paper.append(list(map(int,sys.stdin.readline().split())))
+n = int(si())
+board = [list(map(int ,si().split())) for _ in range(n)]
 
-result = {-1:0, 0:0,1:0}
+dic = {-1:0,0:0,1:0}
 
-def divided(row,col,n):
-    curr = paper[row][col] 
+def is_same(cur,r,c,n) :
+    for i in range(r,r+n) :
+        for j in range(c,c+n) :
+            if board[i][j] != cur :
+                return False
+    return True
 
-    for i in range(row, row+n):
-        for j in range(col, col+n):
-            if paper[i][j] != curr:
-                next = n//3
-                
-                divided(row, col, next) 
-                divided(row, col+next, next)
-                divided(row, col+(next*2), next) 
-                divided(row+next, col, next) 
-                divided(row+next, col+next, next)
-                divided(row+next, col+(next*2), next) 
-                divided(row+(next*2), col, next) 
-                divided(row+(next*2), col+next, next) 
-                divided(row+(next*2), col+(next*2), next) 
-                return 
+def rec_func(n,r,c) :
+    if n == 1 or is_same(board[r][c],r,c,n):
+        dic[board[r][c]] += 1
+        return
 
-    result[curr] +=1 
-    return 
+    mid = n // 3
+    rec_func(mid,r,c)
+    rec_func(mid,r,c+mid)
+    rec_func(mid,r,c+(mid*2))
+
+    rec_func(mid,r+mid,c)
+    rec_func(mid,r+mid,c+mid)
+    rec_func(mid,r+mid,c+(mid*2))
+
+    rec_func(mid,r+(mid*2),c)
+    rec_func(mid,r+(mid*2),c+mid)
+    rec_func(mid,r+(mid*2),c+(mid*2))
 
 
-divided(0,0,n)
+rec_func(n,0,0)
 
-for i in result.values():
-    print(i)
+print(dic[-1],dic[0],dic[1],sep='\n')
+
+
