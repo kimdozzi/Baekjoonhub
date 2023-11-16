@@ -30,8 +30,7 @@ def bfs() :
         for dx,dy in dir :
             nx = x + dx
             ny = y + dy
-            if not is_range(nx,ny) : continue
-            if board[nx][ny] == 1 and not checked[nx][ny] :
+            if is_range(nx,ny) and board[nx][ny] == 1 and not checked[nx][ny] :
                 checked[nx][ny] = True
                 new_board[nx][ny] += new_board[x][y] + 1
                 q.append((nx,ny))
