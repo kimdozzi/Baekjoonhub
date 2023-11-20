@@ -2,7 +2,6 @@ from collections import defaultdict
 import math
 def solution(str1, str2):
     s1, s2 = str1.lower(), str2.lower()
-    
     def calculate(data) :
         arr = defaultdict(int)
         for i in range(len(data)-1) :
@@ -12,8 +11,7 @@ def solution(str1, str2):
             arr[temp] += 1
         return arr
     
-    data1 = calculate(s1)
-    data2 = calculate(s2)
+    data1, data2 = calculate(s1), calculate(s2)
     if len(data1) == 0 and len(data2) == 0 :
         return 65536
     
@@ -38,6 +36,4 @@ def solution(str1, str2):
             b.append(k)
             v -= 1
             
-    ans = len(a)/len(b) * 65536
-    
-    return math.floor(ans)
+    return math.floor(len(a)/len(b) * 65536)
