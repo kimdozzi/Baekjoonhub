@@ -23,4 +23,4 @@ while start + 1 < end :
         mid += 1
 
 
-print(end-1)
+print(start)
