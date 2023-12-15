@@ -1,29 +1,22 @@
 import sys
 si = sys.stdin.readline
 
-n=int(si())
-tower_list=list(map(int,si().split()))
-answer = []
-mono_stk = []
+n = int(si())
+tower_list=list(map(int, si().split()))
+stk = []
+ans = []
 
 for i in range(n) :
-    h = tower_list[i]
-    if mono_stk :
-        #print(mono_stk)
-        while mono_stk :
-            if mono_stk[-1][0] < h :
-                mono_stk.pop()
-                if not mono_stk : print(0, end=' ')
+    # 수신가능한 탑이 있다면
+    while stk :
+        if stk[-1][1] > tower_list[i] :
+            ans.append(stk[-1][0] + 1)
+            break
+        else :
+            stk.pop()
 
-            elif mono_stk[-1][0] > h :
-                print(mono_stk[-1][1]+1, end=' ')
-                break
+    if not stk :
+        ans.append(0)
+    stk.append([i, tower_list[i]])
 
-            else :
-                print(mono_stk[-1][1]+1, end=' ')
-                mono_stk.pop()
-                break
-        mono_stk.append([h, i])
-    else :
-        print(0, end=' ')
-        mono_stk.append([h, i])
+print(" ".join(map(str, ans)))
