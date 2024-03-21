@@ -19,7 +19,7 @@ def draw():
                 if num==n**2:
                     return
                 num+=1
-            t = (t+1)%4
+            t = (t+1+4)%4
         cnt+=2
         x-=1; y-=1
 
