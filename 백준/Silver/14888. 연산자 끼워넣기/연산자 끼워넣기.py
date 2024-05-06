@@ -2,12 +2,11 @@ import sys
 input = sys.stdin.readline
 N = int(input())
 arr = list(map(int, input().split()))
-operator = list(map(int, input().split()))  # + - * %
+operator = list(map(int, input().split())) 
 ans = []
 visit = [False for _ in range(len(operator))]
 mx = float('-inf')
 mn = float('inf')
-
 
 def rec_func(depth):
     if depth == N-1:
@@ -29,16 +28,13 @@ def rec_func(depth):
         mn = min(mn, total)
         return
 
-    else:
-        for i in range(len(operator)):
-            if operator[i]:
-                operator[i] -= 1
-                ans.append(i)
-                rec_func(depth+1)
-                ans.pop()
-                operator[i] += 1
-
+    for i in range(len(operator)):
+        if operator[i]:
+            operator[i] -= 1
+            ans.append(i)
+            rec_func(depth+1)
+            ans.pop()
+            operator[i] += 1
 
 rec_func(0)
-print(mx)
-print(mn)
+print(mx,mn,sep='\n')
