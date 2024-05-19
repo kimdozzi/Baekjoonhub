@@ -1,9 +1,6 @@
-import sys
-si = sys.stdin.readline
 
-n = int(si())
-board = [list(map(int ,si().split())) for _ in range(n)]
-
+n = int(input())
+board = [list(map(int ,input().split())) for _ in range(n)]
 dic = {-1:0,0:0,1:0}
 
 def is_same(cur,r,c,n) :
@@ -31,9 +28,5 @@ def rec_func(n,r,c) :
     rec_func(mid,r+(mid*2),c+mid)
     rec_func(mid,r+(mid*2),c+(mid*2))
 
-
 rec_func(n,0,0)
-
 print(dic[-1],dic[0],dic[1],sep='\n')
-
-
