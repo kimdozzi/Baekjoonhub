@@ -1,29 +1,38 @@
 import sys
 si = sys.stdin.readline
 
-n = int(si())
-board = [list(map(int, si().rstrip())) for _ in range(n)]
-
-
-def rec_func(r,c,length) :
-    if isSame(r,c,length) :
-        print(board[r][c],end='')
-        return
-
-    mid = length // 2
-    print('(',end='')
-    rec_func(r,c,mid)
-    rec_func(r,c+mid,mid)
-    rec_func(r+mid,c,mid)
-    rec_func(r+mid,c+mid,mid)
-    print(')',end='')
-
-
-def isSame(r,c,length) :
-    for i in range(length) :
-        for j in range(length) :
-            if board[r][c] != board[r+i][c+j] :
+def is_same(cur, r,c,n, board) :
+    for i in range(r,r+n) :
+        for j in range(c,c+n) :
+            if cur != board[i][j] :
                 return False
     return True
 
-rec_func(0,0,n)
+def rec_func(N, r, c, arr, board) :
+    if N == 1 or is_same(board[r][c], r, c, N, board) :
+        arr.append(board[r][c])
+        return
+
+    mid = N//2
+    arr.append('(')
+    rec_func(mid, r, c, arr, board)
+    rec_func(mid, r, c+mid, arr, board)
+
+    rec_func(mid, r+mid, c, arr, board)
+    rec_func(mid, r+mid, c+mid, arr, board)
+    arr.append(')')
+
+
+def main():
+    N = int(si())
+    board = [list(si().rstrip()) for _ in range(N)]
+    arr = []
+
+    rec_func(N,0,0,arr,board)
+
+    print(*arr,sep='')
+
+
+if __name__ == "__main__":
+    main()
+
