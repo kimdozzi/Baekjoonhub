@@ -1,5 +1,4 @@
 import sys
-
 si = sys.stdin.readline
 
 n,c=map(int,si().split())
@@ -18,7 +17,6 @@ while lo <= hi :
         if arr[i]-cur >= mid :
             cur = arr[i]
             count += 1
-
     if count >= c :
         result = mid
         lo = mid + 1
