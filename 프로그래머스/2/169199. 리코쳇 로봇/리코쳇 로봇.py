@@ -1,4 +1,8 @@
 from collections import deque
+
+dirs = [[0,1],[0,-1],[1,0],[-1,0]]
+r,c = 0,0
+    
 def search(board) :
     for i in range(len(board)) :
         for j in range(len(board[i])) :
@@ -12,11 +16,8 @@ def search(board) :
 def bfs(x,y,visited,dirs,r,c,board,ax,ay) :
     q = deque([(x,y,0)])
     visited[x][y] = True
-    flag = False
     
     while q :
-        if flag : break
-        
         x, y, move = q.popleft()
         
         for i in range(4) :
@@ -30,22 +31,17 @@ def bfs(x,y,visited,dirs,r,c,board,ax,ay) :
             nx,ny = nx - dirs[i][0], ny - dirs[i][1]
             
             if board[nx][ny] == board[ax][ay] : 
-                flag = True
-                break
+                return move+1
             
             if not visited[nx][ny] : 
                 visited[nx][ny] = True
                 q.append((nx,ny,move+1))
         
-    if flag :
-        return move+1
-    
     return -1 
         
     
 
 def solution(board):
-    dirs = [[0,1],[0,-1],[1,0],[-1,0]]
     visited = [[False] * len(board[0]) for _ in range(len(board))]
     r,c = len(board), len(board[0])
     rx,ry,ax,ay = search(board)
