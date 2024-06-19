@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,7 +36,7 @@ public class Main {
         // init
         init();
 
-        // solve 
+        // solve
         int res1 = dijkstra(1, x) + dijkstra(x, y) + dijkstra(y, v);
         int res2 = dijkstra(1, y) + dijkstra(y, x) + dijkstra(x, v);
         int ans = (res1 >= INF && res2 >= INF) ? -1 : Math.min(res1, res2);
@@ -58,7 +59,7 @@ public class Main {
             visited[cur] = true;
 
             for(Node node : graph[cur]) {
-                if (dist[cur] + node.weight < dist[node.to]) {
+                if (!visited[node.to] && dist[cur] + node.weight < dist[node.to]) {
                     dist[node.to] = dist[cur] + node.weight;
                     pq.add(new Node(node.to, dist[node.to]));
                 }
