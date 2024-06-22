@@ -1,8 +1,8 @@
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -10,57 +10,44 @@ public class Main {
     static int[] arr, oper = new int[4];
     static int mx = Integer.MIN_VALUE, mn = Integer.MAX_VALUE;
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         // init
         input();
 
         //solve
-        solve(0, new StringBuilder());
+        solve(1, arr[0]);
 
         System.out.print(mx + "\n" + mn);
     }
 
-    private static void solve(int depth, StringBuilder sb){
-        if(depth == n-1) {
-            int res = find(sb);
-            mx = Math.max(mx, res);
-            mn = Math.min(mn, res);
+    private static void solve(int index, int sum) {
+        if (index == n) {
+            mx = Math.max(mx, sum);
+            mn = Math.min(mn, sum);
             return;
         }
 
-        for(int i=0; i<4; i++) {
-            if(oper[i] > 0) {
-                oper[i] -= 1;
-                sb.append(i);
-                solve(depth + 1, sb);
-                oper[i] += 1;
-                sb.deleteCharAt(depth);
+        for (int op = 0; op < 4; op++) {
+            if (oper[op] > 0) {
+                oper[op]--;
+                solve(index + 1, compute(sum, op, arr[index]));
+                oper[op]++;
             }
         }
     }
 
-    private static int find(StringBuilder sb) {
-        int sum = arr[0];
-        for(int i=1; i<arr.length; i++) {
-            int num = Integer.parseInt(sb.substring(i-1,i));
-            switch (num) {
-                case 0:
-                    sum += arr[i];
-                    break;
-                case 1:
-                    sum -= arr[i];
-                    break;
-                case 2:
-                    sum *= arr[i];
-                    break;
-                case 3:
-                    sum /= arr[i];
-                    break;
-                default:
-                    break;
-            }
+    private static int compute(int a, int op, int b) {
+        switch (op) {
+            case 0:
+                return a + b;
+            case 1:
+                return a - b;
+            case 2:
+                return a * b;
+            case 3:
+                return a / b;
         }
-        return sum;
+        return -1;
     }
 
 
@@ -72,11 +59,13 @@ public class Main {
         arr = new int[n];
 
         st = new StringTokenizer(br.readLine());
-        for(int i=0; i<n; i++)
+        for (int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
+        }
 
         st = new StringTokenizer(br.readLine());
-        for(int i=0; i<4; i++)
+        for (int i = 0; i < 4; i++) {
             oper[i] = Integer.parseInt(st.nextToken());
+        }
     }
 }
