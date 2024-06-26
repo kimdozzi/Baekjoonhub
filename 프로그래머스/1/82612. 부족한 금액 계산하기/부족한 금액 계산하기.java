@@ -7,6 +7,6 @@ class Solution {
         
         if (money - total >= 0) return 0;
         
-        return (long) Math.abs(total - money);
+        return Math.abs(total - money);
     }
 }
