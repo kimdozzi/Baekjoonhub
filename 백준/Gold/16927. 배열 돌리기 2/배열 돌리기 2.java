@@ -26,9 +26,9 @@ public class Main {
             }
         }
 
-        min = Math.min(n, m)/2;
+        min = Math.min(n, m);
 
-        for (int i = 0; i < min; i++) {
+        for (int i = 0; i < min / 2; i++) {
             int cnt = r % (((n - 2 * i) + (m - 2 * i)) * 2 - 4);
             rotate(i, cnt);
         }
@@ -70,4 +70,3 @@ public class Main {
         System.out.print(sb);
     }
 }
-
