@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
@@ -7,7 +6,8 @@ import java.util.StringTokenizer;
 
 class Main {
 	static int N, K;
-	static int[] time = new int[100001];
+	static int[] time = new int[200001];
+	static final int START_POSITION = 100000;
 	static int minTime = Integer.MAX_VALUE;
 	static int count = 0;
 
@@ -33,13 +33,13 @@ class Main {
 	static void bfs() {
 		Queue<Integer> q = new LinkedList<>();
 		q.add(N);
-		time[N] = 1;
+		time[N + START_POSITION] = 1;
 
 		while (!q.isEmpty()) {
 			int now = q.poll();
 
 			// now 방문 시간이 최소 시간보다 크면 제외
-			if (minTime < time[now])
+			if (minTime < time[now + START_POSITION])
 				return;
 
 			for (int i = 0; i < 3; i++) {
@@ -57,16 +57,16 @@ class Main {
 
 				// 동생에게 도달한 경우
 				if (next == K) {
-					minTime = time[now]; // 최소 도착 시간 갱신.
+					minTime = time[now + START_POSITION]; // 최소 도착 시간 갱신.
 					count++;
 				}
 
 				// 첫 방문이거나 (time[next] == 0)
 				// 이미 방문한 곳이어도 같은 시간에 방문했다면 (time[next] == time[now] + 1)
 				// 경우의 수에 추가될 수 있기 때문에 Queue 에 한번 더 넣어줌
-				if (time[next] == 0 || time[next] == time[now] + 1) {
+				if (time[next + START_POSITION] == 0 || time[next + START_POSITION] == time[now + START_POSITION] + 1) {
 					q.add(next);
-					time[next] = time[now] + 1;
+					time[next + START_POSITION] = time[now + START_POSITION] + 1;
 				}
 			}
 		}
