@@ -1,5 +1,5 @@
 import java.util.*;
-
+// https://school.programmers.co.kr/questions/39257
 class Solution {
  static List<Info>[] A;
     static int[] intensity;
