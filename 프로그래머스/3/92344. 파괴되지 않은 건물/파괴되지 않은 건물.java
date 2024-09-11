@@ -15,6 +15,9 @@ class Solution {
             imos[r2 + 1][c2 + 1] += value;
         }
         
+        
+        
+        
         // 누적합 계산
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -24,6 +27,7 @@ class Solution {
                 
                 board[i][j] += imos[i][j];
             }
+            
         }
         
         // 파괴되지 않은 건물 수 계산
@@ -35,5 +39,15 @@ class Solution {
         }
         
         return answer;
+    }
+    
+    private static void print(int n, int m, int[][] board) {
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 }
