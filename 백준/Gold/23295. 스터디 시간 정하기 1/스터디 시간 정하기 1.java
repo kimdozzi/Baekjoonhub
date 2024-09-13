@@ -4,48 +4,39 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int N, K;
-	static int[] times;
+	static int len = 100000;
+	static int n, t;
+	static int[] time = new int[len + 2];
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-
-		N = Integer.parseInt(st.nextToken());
-		K = Integer.parseInt(st.nextToken());
-
-		times = new int[100001];
-
-		for (int i = 0; i < N; i++) {
-			int K = Integer.parseInt(br.readLine());
-			for (int j = 0; j < K; j++) {
+		n = Integer.parseInt(st.nextToken());
+		t = Integer.parseInt(st.nextToken());
+		for (int i = 0; i < n; i++) {
+			int k = Integer.parseInt(br.readLine());
+			for (int j = 0; j < k; j++) {
 				st = new StringTokenizer(br.readLine());
-				int from = Integer.parseInt(st.nextToken());
-				int to = Integer.parseInt(st.nextToken());
-				times[from] += 1;
-				times[to] += -1;
+				int s = Integer.parseInt(st.nextToken());
+				int e = Integer.parseInt(st.nextToken());
+				time[s]++;
+				time[e]--;
 			}
 		}
+		for (int i = 1; i < len + 2; i++)
+			time[i] += time[i - 1];
+		for (int i = 1; i < len + 2; i++)
+			time[i] += time[i - 1];
 
-		for (int i = 1; i < 100001; i++) {
-			times[i] += times[i - 1];
-		}
-
-		int mt = Integer.MIN_VALUE;
-
-		int sum = 0;
-		int idx = 0;
-		for (int i = 0; i < 100001 - K; i++) {
-			for (int j = i; j < i + K; j++) {
-				sum += times[j];
+		int max = time[t - 1];
+		int anstime = -1;
+		for (int i = 0; i < len + 1 - t; i++) {
+			int tmp = time[t + i] - time[i];
+			if (max < tmp) {
+				max = tmp;
+				anstime = i;
 			}
-			if (mt < sum) {
-				idx = i;
-				mt = sum;
-			}
-			sum = 0;
 		}
-		System.out.println(idx + " " + (idx + K));
-
+		System.out.println(anstime + 1 + " " + (anstime + t + 1));
 	}
 }
