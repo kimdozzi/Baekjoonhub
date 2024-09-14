@@ -33,37 +33,13 @@ class Solution {
                 anstime = i+1;
             }
         }
-        return ToTime(anstime);
+        
+        return String.format("%02d:%02d:%02d", 
+                            anstime/3600, (anstime/60)%60, anstime%60);
     }
 
     public int ToInt(String time){
-        
         String[] t = time.split(":");
-        
-        return Integer.parseInt(t[2])+
-            Integer.parseInt(t[1])*60+
-            Integer.parseInt(t[0])*60*60;
-    }
-    
-    public String ToTime(long time){
-        
-        long hour= time/3600;
-        String sh=String.valueOf(hour);
-        if(hour<10) sh="0"+sh;
-        
-        
-        time-=hour*3600;
-        
-        long min= time/60;
-        time-=min*60;
-        String mh=String.valueOf(min);
-        
-        if(min<10) mh="0"+mh;
-        
-        String ch=String.valueOf(time);
-        if(time<10) ch="0"+ch;
-        
-        return sh+":"+mh+":"+ch;
-        
+        return Integer.parseInt(t[2]) + Integer.parseInt(t[1])*60 + Integer.parseInt(t[0])*60*60;
     }
 }
