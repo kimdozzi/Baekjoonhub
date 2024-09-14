@@ -2,8 +2,7 @@ class Solution {
     // https://20240228.tistory.com/96
     public long solution(int n, int[] times) {
         long lo = 0;
-        long hi = Long.MAX_VALUE/100;
-        System.out.println(hi);
+        long hi = (long) Math.pow(10,18)+1;
         while(lo + 1 < hi) {
             long mid = lo + ((hi-lo)/2);
             
