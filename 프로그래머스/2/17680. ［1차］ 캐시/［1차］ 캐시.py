@@ -23,3 +23,4 @@ def solution(cacheSize, cities):
             ans += 5
     
     return ans
+
