@@ -3,34 +3,20 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-// BOJ / G1 / 마법사 상어와 복제 / 50분 +
-// https://www.acmicpc.net/problem/23290
 public class Main {
-	static class Fish {
-		int x;
-		int y;
-		int d;
-
-		public Fish(int x, int y, int d) {
-			this.x = x;
-			this.y = y;
-			this.d = d;
-		}
-	}
-
 	static int M, S;
 	static int fdx[] = {0, 0, -1, -1, -1, 0, 1, 1, 1}; // 물고기 이동
 	static int fdy[] = {0, -1, -1, 0, 1, 1, 1, 0, -1};
-
 	static int dx[] = {0, -1, 0, 1, 0}; // 상어 이동
 	static int dy[] = {0, 0, -1, 0, 1};
-
 	static ArrayList<Fish>[][] map;
 	static ArrayList<Fish> list;
 	static int[][] smell; // 물고기 냄새
 	static int sx, sy; // 상어 위치
-
 	static int res; // 격자에 있는 물고기 수(정답)
+	static int[] result = new int[3]; // 상어 이동 방향(임시)
+	static int[] shkMove = new int[3]; // 상어 이동 방향(최종)
+	static int fishNum = Integer.MIN_VALUE;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -44,9 +30,9 @@ public class Main {
 		map = new ArrayList[4][4];
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++)
-				map[i][j] = new ArrayList<Fish>();
+				map[i][j] = new ArrayList<>();
 		}
-		list = new ArrayList<Fish>();
+		list = new ArrayList<>();
 
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -55,7 +41,6 @@ public class Main {
 			int d = Integer.parseInt(st.nextToken());
 
 			list.add(new Fish(r, c, d));
-
 		}
 
 		// 상어 위치 입력
@@ -68,7 +53,7 @@ public class Main {
 
 	}
 
-	private static void simulation() throws CloneNotSupportedException {
+	private static void simulation() {
 		for (int time = 0; time < S; time++) {
 			// 1. 물고기 복제 마법
 			ArrayList<Fish> copy = copy(list);
@@ -76,7 +61,7 @@ public class Main {
 			// 2. 물고기 이동
 			for (int i = 0; i < list.size(); i++) {
 				Fish cur = list.get(i);
-				cur = moveFish(cur);
+				moveFish(cur);
 			}
 			// 2-1. 물고기 이동한 후 map에 배치
 			setMap();
@@ -103,13 +88,11 @@ public class Main {
 		for (int i = 0; i < 3; i++) {
 			sx += dx[shkMove[i]];
 			sy += dy[shkMove[i]];
-			if (map[sx][sy].size() > 0) {
+			if (!map[sx][sy].isEmpty()) {
 				smell[sx][sy] = 3;
 				map[sx][sy].clear();
 			}
-
 		}
-
 	}
 
 	private static void reset() { // 다음 턴을 위해 map의 정보를 list에 저장하고, map 리셋
@@ -146,10 +129,6 @@ public class Main {
 
 	}
 
-	static int result[] = new int[3]; // 상어 이동 방향(임시)
-	static int shkMove[] = new int[3]; // 상어 이동 방향(최종)
-	static int fishNum = Integer.MIN_VALUE;
-
 	private static void sharkBacktracking(int idx) { // 상어 이동방향 정하기 by 중복순열
 		if (idx == 3) {
 			int fnum = checkFish(); // 해당 방향으로 상어가 이동했을 때 물고기 수
@@ -172,7 +151,7 @@ public class Main {
 	}
 
 	private static int checkFish() { // sharkBacktracking에서 정한 방향으로 갔을 때 먹는 물고기 수
-		boolean visited[][] = new boolean[4][4];
+		boolean[][] visited = new boolean[4][4];
 		int cnt = 0; // 물고기 수
 		int nx = sx, ny = sy;
 		for (int i = 0; i < 3; i++) {
@@ -180,7 +159,6 @@ public class Main {
 			ny += dy[result[i]];
 
 			if (nx < 0 || nx >= 4 || ny < 0 || ny >= 4) {
-				cnt = 0;
 				cnt = -1; // 범위 벗어남
 				break;
 			}
@@ -201,7 +179,7 @@ public class Main {
 	}
 
 	private static Fish moveFish(Fish cur) {
-		int nx = 0, ny = 0;
+		int nx, ny;
 		int cnt = 0;
 		while (true) {
 			nx = cur.x + fdx[cur.d];
@@ -224,12 +202,24 @@ public class Main {
 		return cur;
 	}
 
-	private static ArrayList<Fish> copy(ArrayList<Fish> list) throws CloneNotSupportedException { // 리스트 복사
+	private static ArrayList<Fish> copy(ArrayList<Fish> list) { // 리스트 복사
 		ArrayList<Fish> tmp = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			Fish cur = list.get(i);
 			tmp.add(new Fish(cur.x, cur.y, cur.d));
 		}
 		return tmp;
+	}
+
+	static class Fish {
+		int x;
+		int y;
+		int d;
+
+		public Fish(int x, int y, int d) {
+			this.x = x;
+			this.y = y;
+			this.d = d;
+		}
 	}
 }
