@@ -2,8 +2,6 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int N, int[] stages) {
-        int number = stages.length;
-        Map<Integer, Double> map = new HashMap<>();
         int[] vis = new int[N+1];
         double[] ans = new double[N+1];
          
@@ -12,9 +10,11 @@ class Solution {
             vis[stages[i]]++;
         }
         
+        int number = stages.length;
+        Map<Integer, Double> map = new HashMap<>();
         for(int i=1; i<=N; i++) {
             if (vis[i] != 0) 
-                ans[i] = ((double)vis[i] / number);
+                ans[i] = (double)vis[i] / number;
             else 
                 ans[i] = 0;
             number -= vis[i];
@@ -26,7 +26,6 @@ class Solution {
         
         List<Integer> res = new ArrayList<>();
         for (int key : keySet) {
-            System.out.println(key + " " + map.get(key));
             res.add(key);
         }
         
