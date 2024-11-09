@@ -13,7 +13,7 @@ public class Main {
 		}
 		
 		int minLength = 100;
-		for (int i = s.length() - 1; i >= 0; i--) {
+		for (int i = s.length() - 2; i >= 0; i--) {
 			StringBuilder sb = new StringBuilder(s);
 			for (int j = i; j >= 0; j--) {
 				sb.append(s.charAt(j));
