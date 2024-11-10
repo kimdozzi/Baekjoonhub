@@ -13,19 +13,17 @@ public class Main {
 		int[] arr = new int[n];
         
         int max = 0;
-        int sum = 0;
 		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < n; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
             max = Math.max(max, arr[i]);
-            sum += arr[i];
 		}
 		
-		int lo = max - 1, hi = sum;
+		int lo = max - 1, hi = 1000001;
 		while (lo + 1 < hi) {
 			int mid = (lo + hi) / 2;
 
-			int cnt = 1;
+			int cnt = 0;
 			int currentSum = 0;
 			for (int i = 0; i < arr.length; i++) {
 				if (currentSum + arr[i] > mid) {
@@ -34,6 +32,8 @@ public class Main {
 				}
 				currentSum += arr[i];
 			}
+            
+            if (currentSum > 0 && currentSum <= mid) cnt++;
 
 			if (cnt <= m) {
 				hi = mid;
