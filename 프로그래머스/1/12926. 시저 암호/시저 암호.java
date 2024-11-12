@@ -9,7 +9,9 @@ class Solution {
             }
             
             char base = Character.isUpperCase(c) ? 'A' : 'a';
-            answer.append((char) (base + (c - base + n) % 26));
+            int fromPos = c - base;
+            int toPos = (fromPos + n  + 26) % 26;
+            answer.append((char)(base + toPos));
         }
         return answer.toString();
     }
