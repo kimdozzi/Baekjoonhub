@@ -1,33 +1,31 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Stack;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
-		int[] arr = new int[n];
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
-		}
-
-		Stack<int[]> stk = new Stack<>();
-		int[] res = new int[n];
-		for (int i = arr.length - 1; i >= 0; i--) {
-			while (!stk.isEmpty() && stk.peek()[1] < arr[i]) {
-				int[] data = stk.pop();
-				int idx = data[0];
-				res[idx] = i + 1;
-			}
-			stk.add(new int[] {i, arr[i]});
-		}
-
-		for (int ans : res) {
-			System.out.print(ans + " ");
-		}
-	}
+        int N = Integer.parseInt(st.nextToken());
+        Stack<int[]> stack = new Stack<>();
+        st = new StringTokenizer(br.readLine(), " ");
+        for (int i = 1; i <= N; i++) { // 탑은 0번부터가 아닌 1번부터 시작
+            int top = Integer.parseInt(st.nextToken()); // 현재 확인중인 탑
+            while (!stack.isEmpty()) {
+                if (stack.peek()[1] >= top) {
+                    bw.write(stack.peek()[0] + " ");
+                    break;
+                }
+                stack.pop();
+            }
+            if (stack.isEmpty()) {
+                bw.write("0 ");
+            }
+            stack.push(new int[]{i, top});
+        }
+        bw.flush();
+        bw.close();
+        br.close();
+    }
 }
